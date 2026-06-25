@@ -54,6 +54,13 @@ public class LiveInterviewService {
 
     // Called when user starts the live interview
     public void startLiveSession(Long sessionId) {
+        InterviewSession session = sessionRepository.findById(sessionId)
+                .orElseThrow(() -> new RuntimeException("Session not found"));
+
+        if (session.getStatus() == InterviewSession.SessionStatus.COMPLETED) {
+            throw new RuntimeException("This interview session has already been completed");
+        }
+
         List<Question> questions = questionRepository
                 .findBySessionIdOrderByOrderIndex(sessionId);
 
@@ -64,7 +71,6 @@ public class LiveInterviewService {
         ActiveSessionState state = new ActiveSessionState(sessionId, questions);
         activeSessions.put(sessionId, state);
 
-        // Push the first question immediately
         pushCurrentQuestion(state);
     }
 

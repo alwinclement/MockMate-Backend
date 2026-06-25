@@ -3,6 +3,9 @@ package com.example.MockMate.Model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "questions")
 @Data
@@ -37,4 +40,7 @@ public class Question {
     public enum Difficulty {
         EASY, MEDIUM, HARD
     }
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<Answer> answers = new ArrayList<>();
 }

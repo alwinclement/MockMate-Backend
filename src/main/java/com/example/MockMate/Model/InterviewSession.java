@@ -48,4 +48,6 @@ public class InterviewSession {
     public enum SessionStatus {
         CREATED, IN_PROGRESS, COMPLETED
     }
+    @OneToOne(mappedBy = "session", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Report report;
 }
