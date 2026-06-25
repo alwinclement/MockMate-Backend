@@ -34,7 +34,7 @@ public class InterviewSession {
     @Builder.Default
     private SessionStatus status = SessionStatus.CREATED;
 
-    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions;
 
     private LocalDateTime createdAt;
